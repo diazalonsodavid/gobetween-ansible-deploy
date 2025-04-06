@@ -2,8 +2,23 @@
 bind = ":10443"
 protocol = "tcp"
 balance = "leastconn"
+max_connections = 10000
+client_idle_timeout = "10m"
+backend_idle_timeout = "10m"
+backend_connection_timeout = "2s"
 
-[servers.dicom_proxy.discovery]
-kind = "static"
-static_list = ["10.0.0.10:104", "10.0.0.11:104"]
-interval = "10s"
+  [servers.dicom_proxy.discovery]
+  kind = "static"
+  static_list = [
+    "10.0.0.10:104",
+    "10.0.0.11:104"
+  ]
+  interval = "5s"
+
+  [servers.dicom_proxy.healthcheck]
+  fails = 2
+  passes = 1
+  interval = "5s"
+  timeout = "1s"
+  kind = "ping"
+  ping_timeout_duration = "500ms"
