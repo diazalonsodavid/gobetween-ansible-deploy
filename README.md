@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This repository provides a production-ready Docker setup for [GoBetween](https://github.com/yyyar/gobetween), a modern TCP load balancer and proxy.
+This repository provides a Docker setup for [GoBetween](https://github.com/yyyar/gobetween).
 
 The container is designed to run with an external configuration file mounted as a volume, allowing for flexible forwarding of TCP traffic in both on-premise and cloud environments.
 
