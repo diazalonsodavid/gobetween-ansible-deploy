@@ -1,0 +1,38 @@
+- name: Deploy GoBetween to remote host
+  hosts: gobetween_host
+  become: true
+
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Create config directory on remote host
+      file:
+        path: /home/ubuntu/config
+        state: directory
+        mode: '0755'
+
+    - name: Copy gobetween.toml
+      copy:
+        src: ./config/gobetween.toml
+        dest: /home/ubuntu/config/gobetween.toml
+
+    - name: Copy Dockerfile
+      copy:
+        src: ./Dockerfile
+        dest: /home/ubuntu/Dockerfile
+
+    - name: Build Docker image
+      shell: docker build -t gobetween /home/ubuntu
+
+    - name: Run GoBetween container
+      shell: |
+        docker rm -f gobetween || true
+        docker run -d \
+          -v /home/ubuntu/config/gobetween.toml:/etc/gobetween/conf/gobetween.toml \
+          -p 10443:10443 \
+          --name gobetween \
+          gobetween

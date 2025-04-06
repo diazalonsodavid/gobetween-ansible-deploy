@@ -1,0 +1,9 @@
+[servers.dicom_proxy]
+bind = ":10443"
+protocol = "tcp"
+balance = "leastconn"
+
+[servers.dicom_proxy.discovery]
+kind = "static"
+static_list = ["10.0.0.10:104", "10.0.0.11:104"]
+interval = "10s"
