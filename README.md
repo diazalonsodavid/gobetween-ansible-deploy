@@ -14,3 +14,10 @@ The container is designed to run with an external configuration file mounted as 
 
 ```bash
 docker build -t gobetween-custom .
+
+docker run -d \
+  -v $(pwd)/config/gobetween.toml:/etc/gobetween/conf/gobetween.toml \
+  -p 10443:10443 \
+  --name gobetween \
+  gobetween-custom
+
